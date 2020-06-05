@@ -14,18 +14,19 @@ LUP = merge(LUP1, LUP2, by = c("V1"), all.x = TRUE, all.y = TRUE)
 
 
 #MULTIMERGE W/ LOOP
-#erreur : Error in x[1, dim(x)] : nombre de dimensions incorrect
+#erreurloop verte : Error in x[1, dim(x)] : nombre de dimensions incorrect
+#erreur : arguments imply differing number of rows: 253, 204, 217
 
 multimerge = function(x,...){
   
   
-  x <- list(x,...)
-  y <- x[1, dim(x)]
-  for (i in x){
-    for (j in y){
-      LUP = merge(i, j, by = c("V1"), all.x = TRUE, all.y = TRUE)
+  l <- list(x,...)
+  #y <- l[1, dim(x)]
+  for (i in l){
+    #for (j in y){
+      LUP = merge(i, x, by = c("V1"), all = TRUE)
       
-    }
+    #}
   }
   return(LUP)
 }
@@ -37,7 +38,7 @@ multimergeR = function(x,...){
 }
 
 #TEST REDUCE
-LUP = multimergeR(LUP1,LUP2,LUP3) 
+LUP = multimergeR(LUP1,LUP2,LUP3,LUP4) 
 
 #TEST LOOP
 multimerge(list(LUP1,LUP2,LUP3))  
