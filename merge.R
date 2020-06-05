@@ -5,8 +5,7 @@ library(ggplot2)
 LUP1 = subset(LUP_001_profile, select = c(V1, V3))
 LUP2 = subset(LUP_002_profile, select = c(V1, V3))              
 LUP3 = subset(LUP_003_profile, select = c(V1, V3))
-LUP1$id = 1:nrow(LUP1)
-LUP2$id = 1:nrow(LUP2)
+LUP4 = subset(LUP_004_profile, select = c(V1, V3))
 
 #MERGE SIMPLE
 
@@ -14,11 +13,13 @@ LUP = merge(LUP1, LUP2, by = c("V1"), all.x = TRUE, all.y = TRUE)
 
 
 
-#FONCTION MERGE DE DATAFRAME NOMBRE VARIABLE
+#MULTIMERGE W/ LOOP
 #erreur : Error in x[1, dim(x)] : nombre de dimensions incorrect
 
-multimerge = function(x){
-  x <- list()
+multimerge = function(x,...){
+  
+  
+  x <- list(x,...)
   y <- x[1, dim(x)]
   for (i in x){
     for (j in y){
@@ -29,7 +30,16 @@ multimerge = function(x){
   return(LUP)
 }
 
-#TEST
+#MULTIMERGE W/ REDUCE()
+multimergeR = function(x,...){
+  LUP = Reduce(function(x, y) merge(x, y, by = c("V1"), all=TRUE), list(x,...))
+  return(LUP)
+}
+
+#TEST REDUCE
+LUP = multimergeR(LUP1,LUP2,LUP3) 
+
+#TEST LOOP
 multimerge(list(LUP1,LUP2,LUP3))  
   
   
