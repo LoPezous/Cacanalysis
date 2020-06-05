@@ -41,7 +41,7 @@ classfonction <- function(file_name.pdf, df, methode, class_target) {
     return(output)
     
   }
-  #
+  ##
 }
 
 #TEST
