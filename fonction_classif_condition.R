@@ -6,7 +6,6 @@ library(ggplot2)
 classfonction <- function(file_name.pdf, df, methode, class_target) {
   
   #TASK
-  
   task = makeClassifTask(data = df, target = class_target)
   
   #LEARNER
@@ -26,13 +25,13 @@ classfonction <- function(file_name.pdf, df, methode, class_target) {
     prediction_df = as.data.frame(prediction)
     prediction_df$id = 1:nrow(prediction_df)
     #col_names = paste("prob", 1:4, sep ="")
-    col_names = c("truth", "prob3", "prob4", "response","id")
+    col_names = c("truth", "prob.class", "1-prob.class", "response","id")
     colnames(prediction_df) = col_names
     
     
     #PLOT
     pdf(file = file_name.pdf)
-    print(ggplot(prediction_df, aes(x = id, y = prob3 -0.5, fill = response))+
+    print(ggplot(prediction_df, aes(x = id, y = prob.class -0.5, fill = response))+
       geom_col())+
       theme_bw()
     dev.off()
@@ -47,5 +46,12 @@ classfonction <- function(file_name.pdf, df, methode, class_target) {
 }
 
 #TEST
-iris_subset <- subset(iris, Species != "virginica")
-classfonction("test.pdf", iris_subset, "classif.logreg", "Species")
+LUPI = merge_OTU("C:/Users/marti/Desktop/StageI3/LUPILDF")
+
+
+
+classfonction("test.pdf", LUPI, "classif.glmnet", "class")
+LUPIT = t(LUPI)
+class = c("NA",rep("class1",10),rep("class2",10))
+TLUPI = as.data.frame(LUPIT)
+TLUPI$class = class
