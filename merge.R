@@ -16,7 +16,7 @@ merge_OTU = function(repertoire){
   
     dfx <- read.delim(file, header = FALSE, skip = 5) 
     colnames(dfx) = col_names 
-
+    dfx = dfx[c("species","abundance")]
     df = merge(dfx, df, by = c("species"), all = TRUE)
     
   }
