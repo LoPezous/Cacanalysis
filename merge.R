@@ -16,8 +16,7 @@ multimerge = function(repertoire){
   for (x in files){
     dfx <- read.delim(x,header = FALSE, skip = 5) 
     colnames(dfx) = col_names 
-    
-    print(x)
+
     out = merge(dfx, df, by = c("species"), all = TRUE)
     
   }
