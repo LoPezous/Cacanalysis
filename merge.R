@@ -4,7 +4,7 @@ options(stringsAsFactors = FALSE)
 multimerge = function(repertoire){
   files = dir(repertoire, full.names = TRUE)
   #files = list.files(filesdir)
-  col_names = c("species", "V2","abundance", "V4", "V5")
+  col_names = c("species", "V2","abundance", "coverage", "nreads")
   df = data.frame(col1 = character(),
                   col2 = numeric(),
                   col3 = numeric(),
@@ -14,7 +14,7 @@ multimerge = function(repertoire){
   
   
   for (x in files){
-    dfx <- read.delim(x) #more columns than column names (problème de sep = ?)
+    dfx <- read.delim(x,header = FALSE, skip = 5) 
     colnames(dfx) = col_names 
     
     print(x)
@@ -24,4 +24,5 @@ multimerge = function(repertoire){
   return(out)
   
 }
-multimerge("C:/Users/marti/Desktop/StageI3/LUPILDF")
+LUP = multimerge("C:/Users/marti/Desktop/StageI3/LUPILDF")
+LUP
