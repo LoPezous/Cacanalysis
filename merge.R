@@ -1,51 +1,27 @@
 rm(list = ls(all = TRUE))
 options(stringsAsFactors = FALSE)
-library(mlr)
-library(ggplot2)
-LUP1 = subset(LUP_001_profile, select = c(V1, V3))
-LUP2 = subset(LUP_002_profile, select = c(V1, V3))              
-LUP3 = subset(LUP_003_profile, select = c(V1, V3))
-LUP4 = subset(LUP_004_profile, select = c(V1, V3))
 
-#MERGE SIMPLE
-
-LUP = merge(LUP1, LUP2, by = c("V1"), all.x = TRUE, all.y = TRUE)
-
-
-
-#MULTIMERGE W/ LOOP
-#erreurloop verte : Error in x[1, dim(x)] : nombre de dimensions incorrect
-#erreur : arguments imply differing number of rows: 253, 204, 217
-
-multimerge = function(x,...){
+multimerge = function(repertoire){
+  files = dir(repertoire, full.names = TRUE)
+  #files = list.files(filesdir)
+  col_names = c("species", "V2","abundance", "V4", "V5")
+  df = data.frame(col1 = character(),
+                  col2 = numeric(),
+                  col3 = numeric(),
+                  col4 = numeric(),
+                  col5 = numeric())
+  colnames(df) = col_names
   
   
-  l <- list(x,...)
-  #y <- l[1, dim(x)]
-  for (i in l){
-    #for (j in y){
-      LUP = merge(i, x, by = c("V1"), all = TRUE)
-      
-    #}
+  for (x in files){
+    dfx <- read.delim(x) #more columns than column names (problème de sep = ?)
+    colnames(dfx) = col_names 
+    
+    print(x)
+    out = merge(dfx, df, by = c("species"), all = TRUE)
+    
   }
-  return(LUP)
+  return(out)
+  
 }
-
-#MULTIMERGE W/ REDUCE()
-multimergeR = function(x,...){
-  LUP = Reduce(function(x, y) merge(x, y, by = c("V1"), all=TRUE), list(x,...))
-  return(LUP)
-}
-
-#TEST REDUCE
-LUP = multimergeR(LUP1,LUP2,LUP3,LUP4) 
-
-#TEST LOOP
-multimerge(list(LUP1,LUP2,LUP3))  
-  
-  
-  
-  
-  
-
-
+multimerge("C:/Users/marti/Desktop/StageI3/LUPILDF")
