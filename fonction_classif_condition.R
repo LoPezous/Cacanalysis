@@ -66,7 +66,7 @@ colnames(TLUPI) = LUPI_duplicate$species #colnames = nom OTU
 #TLUPI$class = class
 TLUPI$file = rownames(TLUPI) #noms des fichiers dans une colonne pour merge avec lupil
 TLUPI = merge(lupil, TLUPI, by = c("file"),all = TRUE ) #merge selon file
-
+TLUPI$file = NULL #en dernier pour que la colonne file ne devienne pas une feature
 
 #TEST
 classfonction("test.pdf", TLUPI,"FSelectorRcpp_information.gain", "classif.glmnet", "Treatment")
