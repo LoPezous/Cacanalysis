@@ -20,6 +20,10 @@ merge_OTU = function(repertoire){
     df = merge(dfx, df, by = c("species"), all = TRUE)
     
   }
+  df$abundance.y.1 = NULL
+  df$unknown = NULL
+  df$coverage = NULL
+  df$nreads = NULL
   return(df)
   
 }
