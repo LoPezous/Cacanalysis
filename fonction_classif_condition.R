@@ -54,16 +54,19 @@ classfonction <- function(file_name.pdf, df, feature_selection_method, method, c
   #return(list(output, perfo))
 }
 
-#TEST
+#TRAITEMENT DE LA DATAFRAME AVANT CLASSIF
 LUPI = merge_OTU("C:/Users/marti/Desktop/StageI3/LUPILDF")
 
-LUPI_duplicate = LUPI
-LUPI$species = NULL
-LUPIT = t(LUPI)
-#class = c(rep("class1",10),rep("class2",10))
-TLUPI = as.data.frame(LUPIT)
-colnames(TLUPI) = LUPI_duplicate$species
+LUPI_duplicate = LUPI #conserve species
+LUPI$species = NULL #sinon problème quand transpose
+LUPIT = t(LUPI) #transpose 
+#class = c(rep("class1",10),rep("class2",10)) classes arbitraires pour test
+TLUPI = as.data.frame(LUPIT) #reconversion en df
+colnames(TLUPI) = LUPI_duplicate$species #colnames = nom OTU
 #TLUPI$class = class
-TLUPI$file = rownames(TLUPI)
-TLUPI = merge(lupil, TLUPI, by = c("file"))
+TLUPI$file = rownames(TLUPI) #noms des fichiers dans une colonne pour merge avec lupil
+TLUPI = merge(lupil, TLUPI, by = c("file"),all = TRUE ) #merge selon file
+
+
+#TEST
 classfonction("test.pdf", TLUPI,"FSelectorRcpp_information.gain", "classif.glmnet", "Treatment")
