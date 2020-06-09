@@ -5,7 +5,7 @@ library(mlr)
 library(ggplot2)
 library(glmnet)
 
-classfonction <- function(file_name.pdf, df, feature_selection_method, methode, class_target) {
+classfonction <- function(file_name.pdf, df, feature_selection_method, method, class_target) {
   df[is.na(df)] = 0
   #TASK
   task = makeClassifTask(data = df, target = class_target)
@@ -18,11 +18,11 @@ classfonction <- function(file_name.pdf, df, feature_selection_method, methode, 
   methoddf = listLearners("classif", properties = c("prob"))
   '%notin%' <- Negate('%in%')
   
-  if (methode %notin% methoddf$class) {
+  if (method %notin% methoddf$class) {
     return("method does not fit") 
   } else {
     
-    base_learner = makeLearner(methode, predict.type = "prob")
+    base_learner = makeLearner(method, predict.type = "prob")
     learner = makeFilterWrapper(learner = base_learner, 
                             fw.method = "FSelectorRcpp_information.gain", fw.perc = 0.25)
     
@@ -57,11 +57,12 @@ classfonction <- function(file_name.pdf, df, feature_selection_method, methode, 
 #TEST
 LUPI = merge_OTU("C:/Users/marti/Desktop/StageI3/LUPILDF")
 
-
+LUPI_duplicate = LUPI
 LUPI$species = NULL
 LUPIT = t(LUPI)
-class = c(rep("class1",10),rep("class2",10),rep("NA",4))
+class = c(rep("class1",10),rep("class2",10))
 TLUPI = as.data.frame(LUPIT)
+colnames(TLUPI) = LUPI$species
 TLUPI$class = class
 
 
