@@ -5,13 +5,13 @@ library(mlr)
 library(ggplot2)
 library(glmnet)
 
-classfonction <- function(file_name.pdf, df, methode, class_target) {
-  
+classfonction <- function(file_name.pdf, df, feature_selection_method, methode, class_target) {
+  df[is.na(df)] = 0
   #TASK
   task = makeClassifTask(data = df, target = class_target)
   
   #FEATURE SELECTION
-  fv = generateFilterValuesData(task, method = "FSelectorRcpp_information.gain")
+  fv = generateFilterValuesData(task, method = feature_selection_method )
   filtered.task = filterFeatures(task, fval = fv, perc = 0.25)
   
   #LEARNER
@@ -22,8 +22,8 @@ classfonction <- function(file_name.pdf, df, methode, class_target) {
     return("method does not fit") 
   } else {
     
-    #learner = makeLearner(methode, predict.type = "prob")
-    learner = makeFilterWrapper(learner = methode,
+    base_learner = makeLearner(methode, predict.type = "prob")
+    learner = makeFilterWrapper(learner = base_learner, 
                             fw.method = "FSelectorRcpp_information.gain", fw.perc = 0.25)
     
     #TRAINING
@@ -33,7 +33,7 @@ classfonction <- function(file_name.pdf, df, methode, class_target) {
     prediction = predict(training, newdata = df)
     prediction_df = as.data.frame(prediction)
     prediction_df$id = 1:nrow(prediction_df)
-    #col_names = paste("prob", 1:4, sep ="")
+    
     col_names = c("truth", "prob.class", "1-prob.class", "response","id")
     colnames(prediction_df) = col_names
     
@@ -65,4 +65,4 @@ TLUPI = as.data.frame(LUPIT)
 TLUPI$class = class
 
 
-classfonction("test.pdf", TLUPI, "classif.glmnet", "class")
+classfonction("test.pdf", TLUPI,"FSelectorRcpp_information.gain", "classif.glmnet", "class")
