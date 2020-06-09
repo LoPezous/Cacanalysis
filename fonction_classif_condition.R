@@ -60,10 +60,10 @@ LUPI = merge_OTU("C:/Users/marti/Desktop/StageI3/LUPILDF")
 LUPI_duplicate = LUPI
 LUPI$species = NULL
 LUPIT = t(LUPI)
-class = c(rep("class1",10),rep("class2",10))
+#class = c(rep("class1",10),rep("class2",10))
 TLUPI = as.data.frame(LUPIT)
 colnames(TLUPI) = LUPI_duplicate$species
-TLUPI$class = class
-
-
-classfonction("test.pdf", TLUPI,"FSelectorRcpp_information.gain", "classif.glmnet", "class")
+#TLUPI$class = class
+TLUPI$file = rownames(TLUPI)
+TLUPI = merge(lupil, TLUPI, by = c("file"))
+classfonction("test.pdf", TLUPI,"FSelectorRcpp_information.gain", "classif.glmnet", "Treatment")
