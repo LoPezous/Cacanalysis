@@ -62,7 +62,7 @@ LUPI$species = NULL
 LUPIT = t(LUPI)
 class = c(rep("class1",10),rep("class2",10))
 TLUPI = as.data.frame(LUPIT)
-colnames(TLUPI) = LUPI$species
+colnames(TLUPI) = LUPI_duplicate$species
 TLUPI$class = class
 
 
