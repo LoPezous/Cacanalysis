@@ -17,10 +17,20 @@ merge_OTU = function(repertoire){
     col_namesdfx = c("species", "unknown",basename(file), "coverage", "nreads")
     colnames(dfx) = col_namesdfx 
     dfx = dfx[c("species", basename(file))]
+    subdfx = dfx[c(basename(file))]
+  
     colnames(dfx) = gsub("_profile.txt","", colnames(dfx))
+    colnames(subdfx) = gsub("_profile.txt","", colnames(subdfx))
     
+    colomn = colnames(subdfx)
+    print(colomn)
+    
+    
+    
+    
+    sample_match = lupil[lupil$file == column]$sampleID
+    print(sample_match)
     df = merge(dfx, df, by = c("species"), all = TRUE)
-    
   }
   #ENLEVE RESIDUS DES COLONNES DE "DF" VIDE
   df$abundance = NULL
@@ -35,7 +45,7 @@ merge_OTU = function(repertoire){
   colnames(df) = df_duplicate$species #colnames = nom OTU
   df$file = rownames(df) #noms des profils dans une colonne
   #
-  rownames(df) = lupil[lupil$file == df$file]$sampleID
+  rownames(df) = sample_match
   
   return(df)
   
