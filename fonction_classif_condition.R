@@ -14,6 +14,7 @@ classfonction <- function(file_name.pdf, df, feature_selection_method, filter_pe
   fv = generateFilterValuesData(task, method = feature_selection_method )
   filtered.task = filterFeatures(task, fval = fv, perc = filter_perc)
   print(filtered.task)
+  
   #LEARNER
   methoddf = listLearners("classif", properties = c("prob"))
   '%notin%' <- Negate('%in%')
@@ -55,6 +56,6 @@ classfonction <- function(file_name.pdf, df, feature_selection_method, filter_pe
 
 
 #TEST
-classfonction("testiris.pdf", iris,"FSelectorRcpp_information.gain", 0.25, "classif.glmnet", "Species")
+classfonction("test.pdf", TLUPI ,"FSelectorRcpp_information.gain", 0.25, "classif.glmnet", "class")
 
 
