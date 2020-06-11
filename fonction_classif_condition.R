@@ -5,15 +5,15 @@ library(mlr)
 library(ggplot2)
 library(glmnet)
 
-classfonction <- function(file_name.pdf, df, feature_selection_method, method, class_target) {
+classfonction <- function(file_name.pdf, df, feature_selection_method, filter_perc, method, class_target) {
   df[is.na(df)] = 0
   #TASK
   task = makeClassifTask(data = df, target = class_target)
   
   #FEATURE SELECTION
   fv = generateFilterValuesData(task, method = feature_selection_method )
-  filtered.task = filterFeatures(task, fval = fv, perc = 0.25)
-  
+  filtered.task = filterFeatures(task, fval = fv, perc = filter_perc)
+  print(filtered.task)
   #LEARNER
   methoddf = listLearners("classif", properties = c("prob"))
   '%notin%' <- Negate('%in%')
@@ -24,7 +24,7 @@ classfonction <- function(file_name.pdf, df, feature_selection_method, method, c
     
     base_learner = makeLearner(method, predict.type = "prob")
     learner = makeFilterWrapper(learner = base_learner, 
-                            fw.method = "FSelectorRcpp_information.gain", fw.perc = 0.25)
+                            fw.method = "FSelectorRcpp_information.gain", fw.perc = filter_perc)
     
     #TRAINING
     training = train(learner, filtered.task)
@@ -51,22 +51,10 @@ classfonction <- function(file_name.pdf, df, feature_selection_method, method, c
     
   }
   
-  #return(list(output, perfo))
 }
 
-#TRAITEMENT DE LA DATAFRAME AVANT CLASSIF
-LUPI = merge_OTU("C:/Users/marti/Desktop/StageI3/LUPILDF")
-
-LUPI_duplicate = LUPI #conserve species
-LUPI$species = NULL #sinon problème quand transpose
-LUPIT = t(LUPI) #transpose 
-#class = c(rep("class1",10),rep("class2",10)) classes arbitraires pour test
-TLUPI = as.data.frame(LUPIT) #reconversion en df
-colnames(TLUPI) = LUPI_duplicate$species #colnames = nom OTU
-#TLUPI$class = class
-TLUPI$file = rownames(TLUPI) #noms des fichiers dans une colonne pour merge avec lupil
-TLUPI = merge(lupil, TLUPI, by = c("file"),all = TRUE ) #merge selon file
-TLUPI$file = NULL #en dernier pour que la colonne file ne devienne pas une feature
 
 #TEST
-classfonction("test.pdf", TLUPI,"FSelectorRcpp_information.gain", "classif.glmnet", "Treatment")
+classfonction("testiris.pdf", iris,"FSelectorRcpp_information.gain", 0.25, "classif.glmnet", "Species")
+
+
