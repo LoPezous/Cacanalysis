@@ -21,7 +21,7 @@ merge_OTU = function(directory){
     
     dfx = dfx[c("species", "abundance")]
     colnames(dfx) = c("species", sample_match)
-                      
+                  
     df = merge(dfx, df, by = c("species"), all = TRUE)
                       
   }
@@ -44,11 +44,11 @@ LUPIT = t(LUPI) #transpose
 TLUPI = as.data.frame(LUPIT) #reconversion en df
 colnames(TLUPI) = LUPI_duplicate$species #colnames = nom OTU
 #TLUPI$class = class
-#TLUPI$file = rownames(TLUPI) #noms des fichiers dans une colonne pour merge avec lupil
-#TLUPI = merge(lupil, TLUPI, by = c("file"),all = TRUE ) #merge selon file
-#TLUPI$file = NULL #en dernier pour que la colonne file ne devienne pas une feature   
-                      
+write.table(TLUPI, file = "TLUPI.txt")
+
+#AJOUT COLONNE TRAITEMENT
+TLUPI$treatment = rev(lupil$Treatment)
    
   
   
-LUPI = merge_OTU("C:/Users/marti/Desktop/StageI3/LUPILDF")
+
