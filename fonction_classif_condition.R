@@ -54,7 +54,6 @@ classfonction <- function(file_name.pdf, df, feature_selection_method, filter_pe
   
 }
 
-
 #TEST
 classfonction("test.pdf", TLUPI ,"FSelectorRcpp_information.gain", 0.25, "classif.glmnet", "class")
 
