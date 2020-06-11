@@ -38,13 +38,18 @@ classfonction <- function(file_name.pdf, df, feature_selection_method, filter_pe
     col_names = c("truth", "prob.class", "1-prob.class", "response","id")
     colnames(prediction_df) = col_names
     
+    #PERFORMANCE
+    print(performance(prediction))
     
     #PLOT
     pdf(file = file_name.pdf)
-    print(ggplot(prediction_df, aes(x = id, y = prob.class -0.5, fill = response))+
+    print(ggplot(prediction_df, aes(x = id, y = prob.class -0.5, fill = truth))+
       geom_col())+
       theme_bw()
     dev.off()
+    print(print(ggplot(prediction_df, aes(x = id, y = prob.class -0.5, fill = truth))+
+                  geom_col())+
+            theme_bw())
     #OUTPUT
     output = write.table(prediction_df)
     
@@ -55,6 +60,6 @@ classfonction <- function(file_name.pdf, df, feature_selection_method, filter_pe
 }
 
 #TEST
-classfonction("test.pdf", TLUPI ,"FSelectorRcpp_information.gain", 0.25, "classif.glmnet", "class")
+classfonction("traitement.pdf", TLUPI ,"FSelectorRcpp_information.gain", 0.25, "classif.glmnet", "treatment")
 
 
