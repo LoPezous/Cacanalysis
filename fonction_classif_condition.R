@@ -13,7 +13,7 @@ classfonction <- function(file_name.pdf, df, feature_selection_method, filter_pe
   #FEATURE SELECTION
   fv = generateFilterValuesData(task, method = feature_selection_method )
   filtered.task = filterFeatures(task, fval = fv, perc = filter_perc)
-  print(filtered.task)
+  print(fv)
   
   #LEARNER
   methoddf = listLearners("classif", properties = c("prob"))
@@ -24,8 +24,7 @@ classfonction <- function(file_name.pdf, df, feature_selection_method, filter_pe
   } else {
     
     base_learner = makeLearner(method, predict.type = "prob")
-    learner = makeFilterWrapper(learner = base_learner, 
-                            fw.method = "FSelectorRcpp_information.gain", fw.perc = filter_perc)
+    learner = makeFilterWrapper(learner = base_learner, fw.method = feature_selection_method, fw.perc = filter_perc)
     
     #TRAINING
     training = train(learner, filtered.task)
@@ -58,6 +57,7 @@ classfonction <- function(file_name.pdf, df, feature_selection_method, filter_pe
   }
   
 }
+
 
 #TEST
 classfonction("traitement.pdf", TLUPI ,"FSelectorRcpp_information.gain", 0.25, "classif.glmnet", "treatment")
