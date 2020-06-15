@@ -74,5 +74,5 @@ classif <- function(file_name.pdf, df, feature_selection_method_list, filter_per
 }
 
 
-#TEST
+##TEST
 classif("traitement.pdf", TLUPI ,list("FSelectorRcpp_information.gain","anova.test"), 0.8, "classif.glmnet", "treatment")
