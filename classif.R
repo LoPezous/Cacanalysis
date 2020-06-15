@@ -25,7 +25,7 @@ classif <- function(file_name.pdf, df, feature_selection_method_list, filter_per
             geom_col()+
             theme_bw())
     dev.off()
-    write.table(x=fvdf, file = "filteredvalues.txt")
+    write.table(x=fvdf, file = paste0(feature_selection_method,"_","fv.txt"))
     #LEARNER
     methoddf = listLearners("classif", properties = c("prob"))
     '%notin%' <- Negate('%in%')
@@ -75,4 +75,4 @@ classif <- function(file_name.pdf, df, feature_selection_method_list, filter_per
 
 
 #TEST
-classif("traitement.pdf", TLUPI ,list("anova.test","FSelectorRcpp_information.gain"), 0.8, "classif.glmnet", "treatment")
+classif("traitement.pdf", TLUPI ,list("FSelectorRcpp_information.gain","anova.test"), 0.8, "classif.glmnet", "treatment")
