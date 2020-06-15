@@ -38,7 +38,7 @@ classfonction <- function(file_name.pdf, df, feature_selection_method, filter_pe
     
     #TRAINING
     training = train(learner, filtered.task)
-    
+    print(getFilteredFeatures(training))
     #PREDICTION
     prediction = predict(training, newdata = df)
     prediction_df = as.data.frame(prediction)
@@ -70,6 +70,6 @@ classfonction <- function(file_name.pdf, df, feature_selection_method, filter_pe
 
 
 #TEST
-classfonction("traitement.pdf", TLUPI ,"anova.test", 0.999, "classif.glmnet", "treatment")
+classfonction("traitement.pdf", TLUPI ,"anova.test", 0.1, "classif.glmnet", "treatment")
 
 
