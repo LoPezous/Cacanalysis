@@ -47,6 +47,11 @@ classfonction <- function(file_name.pdf, df, feature_selection_method, filter_pe
     colnames(prediction_df) = col_names
     
     #PERFORMANCE
+    perf = generateThreshVsPerfData(prediction, measures = list(fpr, tpr, mmce))
+    pdf(file = paste0("ROC","_",feature_selection_method,method,".pdf"))
+    print(plotROCCurves(perf))
+    dev.off()
+    
     print(performance(prediction))
     write.table(x = performance(prediction), file = paste0("performance","_",method,"_",feature_selection_method,"_",filter_perc,"",".txt"))
     
