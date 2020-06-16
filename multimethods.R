@@ -7,4 +7,4 @@ multimethods <- function(feature_method_list, classif_method_list, file_name.pdf
 }
 
 #TEST#
-multimethods(list("FSelectorRcpp_information.gain","anova.test"), list("classif.glmnet","classif.logreg"),"test.pdf", TLUPI, 0.8, "treatment")
+multimethods(list("FSelectorRcpp_information.gain","anova.test"), list("classif.glmnet","classif.ada", "classif.logreg"),"test.pdf", TLUPI, 0.8, "treatment")
