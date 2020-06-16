@@ -69,7 +69,7 @@ classfonction <- function(file_name.pdf, df, feature_selection_method, filter_pe
 }
 
 
-#TEST
+#TEST#
 classfonction("traitement.pdf", TLUPI ,"anova.test", 0.8, "classif.glmnet", "treatment")
 
 
