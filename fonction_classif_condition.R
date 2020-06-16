@@ -48,6 +48,7 @@ classfonction <- function(file_name.pdf, df, feature_selection_method, filter_pe
     
     #PERFORMANCE
     print(performance(prediction))
+    write.table(x = performance(prediction), file = paste0("performance","_",method,"_",feature_selection_method,"_",filter_perc,"",".txt"))
     
     #PLOT
     pdf(file = paste0(feature_selection_method,"_",method,"_",file_name.pdf))
