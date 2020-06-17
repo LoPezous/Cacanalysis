@@ -15,7 +15,7 @@ classfonction <- function(file_name.pdf, df, feature_selection_method, filter_pe
   filtered.task = filterFeatures(task, fval = fv, perc = filter_perc)
   fv_data = fv$data
   fvdf = as.data.frame(fv$data)
-  print(fvdf)
+  
   #PLOT FILTER VALUES
   pdf(file = paste0(feature_selection_method,"_","fv.pdf"))
   print(ggplot(fvdf, aes(x= name, y = value))+
@@ -37,7 +37,8 @@ classfonction <- function(file_name.pdf, df, feature_selection_method, filter_pe
     
     #TRAINING
     training = train(learner, filtered.task)
-    print(getFilteredFeatures(training)) 
+    write.table(x = getFilteredFeatures(training), file = paste0(feature_selection_method,"_",method,"_","Ffeatures.txt"))
+ 
     #PREDICTION
     prediction = predict(training, newdata = df)
     prediction_df = as.data.frame(prediction)
@@ -47,13 +48,13 @@ classfonction <- function(file_name.pdf, df, feature_selection_method, filter_pe
     colnames(prediction_df) = col_names
     
     #PERFORMANCE
-    perf = generateThreshVsPerfData(prediction, measures = list(fpr, tpr, mmce))
+    perf = generateThreshVsPerfData(prediction, measures = list(fpr, tpr, mmce, auc))
     pdf(file = paste0("ROC","_",feature_selection_method,method,".pdf"))
     print(plotROCCurves(perf))
     dev.off()
-    
-    print(performance(prediction))
-    write.table(x = performance(prediction), file = paste0("performance","_",method,"_",feature_selection_method,"_",filter_perc,"",".txt"))
+    write.table(x= perf$data, file = paste0("perf","_",feature_selection_method,method,".txt"))
+    print(perf)
+    #write.table(x =perf, file = paste0("performance","_",method,"_",feature_selection_method,"_",filter_perc,"",".txt"))
     
     #PLOT
     pdf(file = paste0(feature_selection_method,"_",method,"_",file_name.pdf))
