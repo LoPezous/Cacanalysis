@@ -12,7 +12,7 @@ classfonction <- function(file_name.pdf, df, feature_selection_method, filter_pe
   
   #FEATURE SELECTION
   fv = generateFilterValuesData(task, method = feature_selection_method )
-  filtered.task = filterFeatures(task, fval = fv, perc = filter_perc)
+  filtered.task = filterFeatures(task, fval = fv, perc = filter_perc )
   fv_data = fv$data
   fvdf = as.data.frame(fv$data)
   
@@ -41,6 +41,9 @@ classfonction <- function(file_name.pdf, df, feature_selection_method, filter_pe
  
     #PREDICTION
     prediction = predict(training, newdata = df)
+    #Quand parameters ready
+    #prediction = setThreshold(pred, thresh_classif)
+    
     prediction_df = as.data.frame(prediction)
     prediction_df$id = 1:nrow(prediction_df)
     
