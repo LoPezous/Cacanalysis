@@ -8,5 +8,8 @@ A project based on machine learning aiming to analyse patients' gut microbiota i
 * Feature identification
 
 ## Model output exemple
+![alt text](Model output exemple.jpg?raw=true "Output exemple")
 ## Robust feature identification exemple
+![alt text](USA-Delta.jpg?raw=true "Output exemple")
 ## Model benchmarking exemple
+![alt text](USA-Delta.jpg?raw=true "Output exemple")
