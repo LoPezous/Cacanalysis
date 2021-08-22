@@ -6,3 +6,7 @@ A project based on machine learning aiming to analyse patients' gut microbiota i
 * Prediction of treatment response based on microbiota composition
 * Various regression models benchmarking
 * Feature identification
+
+## Model output exemple
+## Robust feature identification exemple
+## Model benchmarking exemple
