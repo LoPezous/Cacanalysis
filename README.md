@@ -9,12 +9,12 @@ A project based on machine learning aiming to analyse patients' gut microbiota i
 
 ## Model output exemple
 
-![alt text](Model output exemple.jpg?raw=true "Output exemple")
+![alt text](Model_output_exemple.jpg?raw=true "Output exemple")
 
 ## Robust feature identification exemple
 
-![alt text](feature selection.jpg?raw=true "Output exemple")
+![alt text](Model_feature_selection.jpg?raw=true "Output exemple")
 
 ## Model benchmarking exemple
 
-![alt text](Model benchmarking.jpg?raw=true "Output exemple")
+![alt text](Model_benchmarking_exemple.jpg?raw=true "Output exemple")
